@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "merge-cli"
+dynamic = ["version"]
+description = "MERGE variant pathogenicity prediction CLI: 4 variant types, 14 model features, local/remote modes, MCP server"
+readme = "README.md"
+requires-python = ">=3.11"
+# The code and the four MERGE_noAlphaGenome_*.pkl ensembles are MIT. The
+# AlphaGenome percentile table (alphagenome_reference_quantiles.json) is
+# CC BY-NC 4.0 -- a label-free summary of AlphaGenome output, not a model trained
+# on it, licensed conservatively; it serves only the optional MERGE + AlphaGenome
+# average. That split has no
+# single SPDX expression, so the declared licence covers the code (which is what
+# pip installs and what "licence" means to a packaging tool) and LICENSE carries
+# both halves in full. See also THIRD_PARTY_NOTICES.md.
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+authors = [{name = "MERGE Team"}]
+keywords = ["bioinformatics", "variant", "pathogenicity", "genomics", "cli"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Environment :: Console",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "click>=8.1",
+  "rich>=13.0",
+  "requests>=2.31",
+  "numpy>=1.26",
+  "pandas>=2.1",
+  # Hard floor, measured — not a guess. The bundles are pickled under sklearn
+  # 1.9.0. The coding LogisticRegression pipeline does not carry the
+  # `multi_class` attribute that predict_proba in 1.7.2 and earlier still reads,
+  # so there it dies with
+  #   AttributeError: 'LogisticRegression' object has no attribute 'multi_class'
+  # while the other panels keep working — a partial failure that is easy to
+  # miss. 1.8.0 is the first version that loads and scores all four. See
+  # tests/test_sklearn_compat.py.
+  # Note this also pins requires-python: sklearn 1.8 has no Python 3.10 wheels.
+  "scikit-learn>=1.8",
+  "joblib>=1.3",
+  "matplotlib>=3.8",
+  "shap>=0.44",
+  # The splicing bundle is a CatBoost pipeline and the non-SNV bundle an XGBoost
+  # pipeline (pickled with xgboost 3.4.1); unpickling fails outright without them.
+  "catboost>=1.2",
+  "xgboost>=3.0",
+]
+
+[project.optional-dependencies]
+# MCP server (merge_cli/mcp_server.py). Optional: the CLI itself never imports
+# it, so `pip install merge-cli` is unchanged for users who don't want it.
+mcp = [
+  # Capped below 2.0 deliberately. mcp 2.0.0 removed mcp.server.fastmcp, which
+  # is where mcp_server.py gets FastMCP from — verified by installing 2.0.0:
+  # `from mcp.server.fastmcp import FastMCP` raises ModuleNotFoundError, and
+  # 2.0 exposes no FastMCP anywhere (the package was restructured around
+  # mcp.server.mcpserver). Without this cap a fresh install resolves to 2.x and
+  # the server fails to start at import time.
+  # Lifting it means porting mcp_server.py to the 2.0 API, not just bumping.
+  "mcp>=1.2,<2",
+]
+# Local mode: reading a local genome FASTA, the dbNSFP / GPN-MSA tabix files and
+# the precomputed VCF cache. Remote mode and the MCP server never touch pysam,
+# and it has no Windows wheels — keeping it out of the base install is what lets
+# `pip install merge-cli` succeed on Windows at all. Every call site degrades to
+# the remote equivalent (or a clear message) when it is absent.
+local = [
+  "pysam>=0.22",
+]
+all = [
+  "merge-cli[mcp,local]",
+]
+
+[project.urls]
+Homepage = "https://merge.fanglab.cn"
+
+[project.scripts]
+merge = "merge_cli.cli:cli"
+merge-mcp = "merge_cli.mcp_server:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "merge_cli.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["merge_cli*"]

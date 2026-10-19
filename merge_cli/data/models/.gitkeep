@@ -1,0 +1,6 @@
+# 此目录用于存放随 pip 分发的集成模型文件
+# 包含以下文件（由构建系统打包）：
+#   BestModel_Clinvar.pkl
+#   BestModel_Clinvar-noncoding.pkl
+#   BestModel_Splice_Unsupervised Only.pkl
+#   ensemble_predict.py

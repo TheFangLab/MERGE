@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "merge_cli": {
+      "command": "python",
+      "args": [
+        "-m",
+        "merge_cli.mcp_server"
+      ],
+      "startup_timeout_sec": 120,
+      "tool_timeout_sec": 240
+    }
+  }
+}

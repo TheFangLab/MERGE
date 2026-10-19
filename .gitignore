@@ -1,0 +1,41 @@
+# ── Python 构建产物 ─────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# ── 虚拟环境（1.2G，绝不入库）────────────────────
+.venv/
+venv/
+env/
+
+# ── 手工备份文件（有 git 之后就不需要了）─────────
+*.bak
+*.bak-*
+*.orig
+
+# ── 用户配置与密钥（AlphaGenome API key 等）──────
+# 正常存在 ~/.config/merge-cli/config.json，此处只是双保险
+config.json
+*.pem
+*.key
+
+# ── 本地数据（模型权重、FASTA、dbNSFP，体积巨大）──
+*.fa
+*.fa.fai
+*.vcf
+*.vcf.gz
+*.vcf.gz.tbi
+*.pt
+*.h5
+*.csv
+
+# 例外：打包进 wheel 的 4 个 MERGE 集成模型必须入库
+!merge_cli/data/models/*.pkl
+
+# ── 测试与运行产物 ───────────────────────────────
+.pytest_cache/
+*.log
+shap_*.png

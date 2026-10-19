@@ -1,0 +1,88 @@
+MERGE / merge-cli — licence
+===========================
+
+This project is split into two parts with different terms, because one of them
+we can give away freely and the other we cannot.
+
+  1. The SOFTWARE, and the four MERGE ensemble models
+     (merge_cli/data/models/MERGE_noAlphaGenome_{coding,splicing,noncoding,
+     nonsnv}.pkl), are under the MIT licence, reproduced in full below.
+     No field-of-use restriction: commercial use, redistribution and
+     modification are all permitted.
+
+     The ensembles were previously CC BY-NC 4.0, because every one of their
+     feature panels included an AlphaGenome-derived feature. They are now
+     trained on a candidate pool with every alphagenome_* column removed, so no
+     AlphaGenome output went into them and that restriction no longer applies.
+
+  2. The AlphaGenome percentile table
+     (merge_cli/data/models/alphagenome_reference_quantiles.json)
+     is under Creative Commons
+     Attribution-NonCommercial 4.0 International (CC BY-NC 4.0):
+     https://creativecommons.org/licenses/by-nc/4.0/
+
+     It pairs every distinct AlphaGenome score observed in the MERGE benchmark
+     with its mid-rank percentile. No label and no fitted parameter is involved,
+     so it is not a model trained on AlphaGenome output. The table is still a
+     derivative of AlphaGenome output, and AlphaGenome's API is offered for
+     non-commercial use only, so we license it conservatively rather than claim
+     a permissiveness we are not in a position to grant.
+
+     It is used only for the optional MERGE + AlphaGenome average, offered on
+     splicing and non-coding variants. Delete it and MERGE still runs: the
+     ensembles score as normal for all four variant classes and the average is
+     reported as unavailable. For commercial use, that is the supported
+     configuration.
+
+Third-party models, databases and services that MERGE calls are covered by
+neither of the above. See THIRD_PARTY_NOTICES.md for each one's licence, the
+four that restrict commercial use, and the attributions they require. MERGE
+redistributes none of them.
+
+
+NOT FOR CLINICAL USE
+--------------------
+
+Independently of any licence term: MERGE is a research prototype. It is not a
+medical device, has not been clinically validated, and has no regulatory
+approval or clearance in any jurisdiction. Its output must not be used for
+diagnosis, prognosis, treatment decisions, genetic counselling, or any other
+clinical or patient-facing purpose. Variant interpretation remains the
+responsibility of qualified professionals following established guidelines such
+as ACMG/AMP.
+
+
+CITATION
+--------
+
+Not a licence condition, but if MERGE contributes to work you publish, please
+cite the MERGE paper and the web server (https://merge.fanglab.cn), and cite the
+upstream models whose scores you used — the citations are listed in
+THIRD_PARTY_NOTICES.md.
+
+
+MIT License
+-----------
+
+Copyright (c) 2026 The MERGE Project Team
+Zhongshan School of Medicine, Sun Yat-sen University
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Contact: chenyanggza01@163.com / fangli9@mail.sysu.edu.cn

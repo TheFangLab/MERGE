@@ -1,0 +1,20 @@
+{
+  "name": "merge",
+  "interface": {
+    "displayName": "MERGE"
+  },
+  "plugins": [
+    {
+      "name": "merge-cli",
+      "source": {
+        "source": "local",
+        "path": "./plugins/merge-cli"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

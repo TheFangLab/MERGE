@@ -1,0 +1,14 @@
+# merge_final_thresholds.json is not optional: without it the MERGE + AlphaGenome
+# average falls back to the ensemble cut-points, which mean something different
+# on that score. Ship the .json with the .pkl files.
+recursive-include merge_cli/data/models *.pkl *.py *.md *.json .gitkeep
+# The skill is what makes the MCP tools findable in clients that defer tool
+# loading, so it has to ship with the package rather than live only in the repo.
+recursive-include merge_cli/data/skills *.md
+# README is included automatically as the long_description; TUTORIAL is not, and
+# README links to it — a source distribution without it has a dead link.
+include TUTORIAL.md
+# LICENSE points at this for the upstream terms; a wheel without it has a
+# dead reference exactly where the licensing questions get asked.
+include THIRD_PARTY_NOTICES.md
+recursive-include tests *.py

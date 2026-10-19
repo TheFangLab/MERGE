@@ -1,0 +1,38 @@
+{
+  "name": "merge-cli",
+  "version": "3.18.0",
+  "description": "Predict the pathogenicity of human genetic variants with the MERGE ensemble.",
+  "author": {
+    "name": "MERGE Team",
+    "url": "https://merge.fanglab.cn"
+  },
+  "homepage": "https://merge.fanglab.cn",
+  "repository": "https://github.com/XiaoYangGao0401/merge-cli",
+  "license": "LicenseRef-Proprietary",
+  "keywords": [
+    "genomics",
+    "variant",
+    "pathogenicity",
+    "bioinformatics",
+    "clinical-genetics",
+    "variant-interpretation"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "MERGE Variant Pathogenicity",
+    "shortDescription": "Is this genetic variant pathogenic?",
+    "longDescription": "Scores a human genetic variant with the MERGE ensemble, which combines 14 sequence and protein models over four variant classes (coding, splice, noncoding, non-SNV). Returns the probability together with the gene, the MANE Select transcript, the ClinVar record when one exists, and explicit caveats saying when the score should not be trusted. Requires merge-cli to be installed: pip install \"merge-cli[mcp]\".",
+    "developerName": "MERGE Team",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://merge.fanglab.cn",
+    "defaultPrompt": [
+      "Is chr1:1040819 G>GC pathogenic?",
+      "Score chr17:43092919 G>A with MERGE.",
+      "Is this variant likely pathogenic or benign, and what does ClinVar say?"
+    ]
+  }
+}
