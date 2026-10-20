@@ -509,8 +509,9 @@ pinning the served model would.
 
 The practical consequence: the six AlphaGenome features
 (`alphagenome_raw_score_{max,min,mean}`, `alphagenome_quantile_score_{max,min,mean}`)
-sit on a somewhat different scale than the ensemble was fitted on. Every other
-model in the panel is reproducible bit-for-bit; this one is not.
+sit on a somewhat different scale than the benchmark tables. Evo 2, Carbon and
+Enformer can also vary slightly across hardware and runs; use the released
+feature tables to reproduce the reported scores.
 
 ### Enformer — weights plus the transform
 
@@ -542,8 +543,10 @@ The local precomputed VCF cache is **disabled in this release**: the tables
 served for it predate the bundled models, so every variant is scored with the
 current models. `merge precomputed status` reports this, and
 `merge precomputed download` downloads only with `--force`. Precomputed MERGE
-scores for the coding and splice-region candidate SNVs are distributed with the
-MERGE-benchmark archive.
+scores for the coding and splice-region candidate SNVs, including hg19 versions,
+are available in
+[MERGE-precomputed-scores](https://github.com/TheFangLab/MERGE-precomputed-scores/releases/tag/v1.0).
+These are CSV downloads; the legacy VCF cache command does not install them.
 
 ---
 
