@@ -109,7 +109,13 @@ THIRD_PARTY_NOTICES.md of merge-cli.
 | coding | `coding_features.csv` | `6b10de865b13190c…` |
 | splicing | `splicing_features.csv` | `a737bf76a8954abc…` |
 | noncoding | `noncoding_features.csv` | `34cc0fa06fb0449b…` |
-| nonsnv | `non_snv_features.csv` | `51b91ea7229d801f…` |
+| nonsnv | `non_snv_features.csv` at benchmark commit `3cc3f8d` | `ecbf4a499a5546ac…` |
+
+The non-SNV bundle records the original training-table hash above. The current
+benchmark table has SHA-256 `51b91ea7229d801f…`: its six `alphagenome_*` columns
+were updated after the model was fitted. The identifiers, labels and every
+non-AlphaGenome feature are unchanged; these updated columns are excluded from
+the MERGE candidate pool and do not affect this bundle's inputs or predictions.
 
 Fitted with scikit-learn 1.9.0 and CatBoost 1.2.10 (full software versions are stored in
 each file under `software_versions`).

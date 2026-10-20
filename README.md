@@ -284,7 +284,10 @@ ensemble score from an earlier pipeline. Every variant is therefore scored with
 the current models; `merge precomputed download` explains this and downloads
 only with `--force`, and the cache is read only when `MERGE_ENABLE_PRECOMPUTED=1`
 is set. Precomputed MERGE scores for the 107,922 coding and 1,920,006
-splice-region candidate SNVs are distributed with the MERGE-benchmark archive.
+splice-region candidate SNVs are available as CSV files in
+[MERGE-precomputed-scores](https://github.com/TheFangLab/MERGE-precomputed-scores/releases/tag/v1.0),
+with hg19 versions and checksums. These CSV files are separate from the legacy VCF
+cache and are not installed by `merge precomputed download`.
 
 ## Scoring conventions
 
@@ -315,9 +318,11 @@ NT-v2's remote code does not load under transformers 5.x. `alphagenome` is
 pinned to 0.5.1 to match the MERGE server, so both modes return the same
 AlphaGenome features.
 
-AlphaGenome is the one model whose features are **not** reproducible over time:
-it runs on Google's servers and is updated there, so today's values differ from
-those in the training tables. Every other model reproduces bit-for-bit.
+AlphaGenome runs on a hosted service, so values from a later model version can
+differ from the benchmark tables. Local recomputation can also differ across
+hardware and runs: Evo 2 and Carbon use bfloat16, and Enformer uses TensorFlow GPU
+kernels that need not be bit-deterministic. Use the released feature tables when
+reproducing the reported scores; see the MERGE-benchmark reproducibility notes.
 
 If local services are unavailable, the errors are reported under
 `prediction.errors` and the CLI continues with the models it could reach.

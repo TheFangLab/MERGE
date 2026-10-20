@@ -11,12 +11,12 @@ Entirely offline: temporary directories, no network, no client required.
 Run:  ./.venv/bin/python tests/test_mcp_install.py
 """
 import json
-import os
 import shutil
 import sys
 import sysconfig
 import tempfile
 from pathlib import Path
+from unittest.mock import patch
 
 from merge_cli import mcp_install as mi
 
@@ -115,9 +115,9 @@ print("\nplan_install / apply_install")
 with tempfile.TemporaryDirectory() as td:
     home = Path(td) / "home"
     home.mkdir()
-    old_home = os.environ.get("HOME")
-    os.environ["HOME"] = str(home)
-    try:
+    # Path.home() uses USERPROFILE on Windows, so setting HOME does not isolate
+    # these tests there. Patch the path resolver directly on every platform.
+    with patch.object(Path, "home", return_value=home):
         cfg = home / ".mcp.json"
 
         # A config that looks like a real user's: other servers, an outdated
@@ -194,11 +194,6 @@ with tempfile.TemporaryDirectory() as td:
         mi.apply_install(plan)
         check("install creates the config",
               json.loads(fresh.read_text())["mcpServers"]["merge-cli"] == mi.server_entry())
-    finally:
-        if old_home is None:
-            os.environ.pop("HOME", None)
-        else:
-            os.environ["HOME"] = old_home
 
 
 # ── Codex (TOML) ────────────────────────────────────────────────────
@@ -219,9 +214,7 @@ with tempfile.TemporaryDirectory() as td:
     home = Path(td) / "home"
     (home / ".codex").mkdir(parents=True)
     cfg = home / ".codex" / "config.toml"
-    old_home = os.environ.get("HOME")
-    os.environ["HOME"] = str(home)
-    try:
+    with patch.object(Path, "home", return_value=home):
         import tomllib
 
         cfg.write_text(CODEX_CONFIG, encoding="utf-8")
@@ -347,11 +340,6 @@ with tempfile.TemporaryDirectory() as td:
             check("malformed TOML raises", False)
         except mi.ConfigError:
             check("malformed TOML raises ConfigError", True)
-    finally:
-        if old_home is None:
-            os.environ.pop("HOME", None)
-        else:
-            os.environ["HOME"] = old_home
 
 
 # ── Config paths ────────────────────────────────────────────────────
